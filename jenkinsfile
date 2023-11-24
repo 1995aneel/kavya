@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Code Clone') {
             steps {
-               git credentialsId: 'git', url: 'https://github.com/1995aneel/kavya.git'
+               git credentialsId: 'git', url: 'https://github.com/ksrepo9/ks.git'
             }
 			}
 		stage('Maven Version') {
@@ -25,9 +25,15 @@ pipeline {
             steps {
                sh 'mvn validate'
             }
-	               }
-		
-		stage('Maven Compile') {
+			}
+		stage('Sonar Scan'){
+            steps {
+             
+			  sh 'mvn sonar:sonar -Dsonar.host.url=http://34.201.117.21:9000 -Dsonar.login=3d5aa03a819b097b679eb63963b16c0c4e8f504c'
+			 }
+			 }			
+			 
+				stage('Maven Compile') {
             steps {
                sh 'mvn compile'
             }
